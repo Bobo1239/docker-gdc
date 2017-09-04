@@ -4,11 +4,12 @@ MAINTAINER Stefan Rohe <think@hotmail.de>
 
 ENV \
   COMPILER=gdc \
-  COMPILER_VERSION=6.3.0
+  COMPILER_VERSION=6.3.0 \
+  D_VERSION=2.068.2
 
 RUN apt-get update && apt-get install -y curl build-essential \
  && curl -fsS -o /tmp/install.sh https://dlang.org/install.sh \
- && bash /tmp/install.sh -p /dlang install -s "${COMPILER}-${COMPILER_VERSION}" \
+ && bash /tmp/install.sh -p /dlang install -s "${COMPILER}-${COMPILER_VERSION}+${D_VERSION}" \
  && rm /tmp/install.sh \
  && apt-get auto-remove -y curl build-essential \
  && apt-get install -y gcc \
@@ -19,10 +20,10 @@ RUN apt-get update && apt-get install -y curl build-essential \
  && rm -rf /dlang/dub-1.0.0/dub.tar.gz
 
 ENV \
-  PATH=/dlang/${COMPILER}-${COMPILER_VERSION}/bin:${PATH} \
-  LD_LIBRARY_PATH=/dlang/${COMPILER}-${COMPILER_VERSION}/lib \
-  LIBRARY_PATH=/dlang/${COMPILER}-${COMPILER_VERSION}/lib \
-  PS1="(${COMPILER}-${COMPILER_VERSION}) \\u@\\h:\\w\$"
+  PATH=/dlang/${COMPILER}-${COMPILER_VERSION}+${D_VERSION}/bin:${PATH} \
+  LD_LIBRARY_PATH=/dlang/${COMPILER}-${COMPILER_VERSION}+${D_VERSION}/lib \
+  LIBRARY_PATH=/dlang/${COMPILER}-${COMPILER_VERSION}+${D_VERSION}/lib \
+  PS1="(${COMPILER}-${COMPILER_VERSION}+${D_VERSION}) \\u@\\h:\\w\$"
 
 RUN cd /tmp \
  && echo 'void main() {import std.stdio; stdout.writeln("it works"); }' > test.d \
